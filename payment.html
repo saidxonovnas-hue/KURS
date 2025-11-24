@@ -61,14 +61,9 @@
         .payment-btn:hover {
             background-color: #333;
         }
-
-        .payme-btn { background-color: #1FB3F7; } 
-        .click-btn { background-color: #008DFF; } 
-        .humo-uzcard-btn { background-color: #F7931A; } 
-        
-        .payme-btn:hover { background-color: #108acb; }
-        .click-btn:hover { background-color: #006dd9; }
-        .humo-uzcard-btn:hover { background-color: #d88117; }
+        /* Faqat bitta asosiy tugma uchun rangni sozlaymiz */
+        .payme-btn { background-color: var(--color-secondary); } 
+        .payme-btn:hover { background-color: #129e8e; }
     </style>
 </head>
 
@@ -97,17 +92,22 @@
 
     <section class="payment-wrapper section-center">
         <h2>💳 To'lovni Tasdiqlash</h2>
-        <p>Kursga ro'yxatdan o'tganingiz uchun rahmat. Iltimos, quyidagi ma'lumotlarni tekshiring va o'zingizga qulay to'lov usulini tanlang.</p>
+        <p>Kursga ro'yxatdan o'tganingiz uchun rahmat. Iltimos, quyidagi ma'lumotlarni tekshiring va ko'rsatilgan kartaga pul o'tkazing.</p>
 
         <div class="payment-details">
             <p><strong>Ism:</strong> <span id="payment-name">...</span></p>
             <p><strong>Tanlangan Kurs:</strong> <span id="payment-course">...</span></p>
             <h3>To'lanadigan Summa: <span id="payment-price">...</span></h3>
             
+            <div style="margin-top: 30px; padding: 20px; border: 2px dashed var(--color-primary); border-radius: 8px;">
+                <h4>💸 Pul o'tkazish uchun karta ma'lumotlari</h4>
+                <p><strong>UZCARD/HUMO karta raqami:</strong> <code>8600 XXXX XXXX 1234</code></p>
+                <p><strong>Qabul qiluvchi:</strong> Saidaxonova Muslima B.</p>
+                <p style="color: red; font-weight: 600;">⚠️ Eslatma: To'lovni amalga oshirgach, tasdiqlovchi chekni Telegram manzilimizga yuboring!</p>
+            </div>
+            
             <div class="payment-options">
-                <a href="#" class="payment-btn payme-btn">PAYME orqali to'lash</a>
-                <a href="#" class="payment-btn click-btn">CLICK orqali to'lash</a>
-                <a href="#" class="payment-btn humo-uzcard-btn">HUMO / UZCARD orqali to'lash</a>
+                <a href="https://t.me/Saidxonovnas_School" target="_blank" class="payment-btn payme-btn" style="margin-top: 20px;">✅ Chekni Telegramda Yuborish</a>
             </div>
             
             <a href="register.html" style="margin-top: 20px; display: block; color: var(--color-primary);">⬅️ Ma'lumotlarni o'zgartirish</a>
@@ -125,32 +125,17 @@
     <script src="scribt.js"></script>
     
     <script>
-        // NOTE: BU YERGA AGGREGATORINGIZDAN OLINGAN HAQIQIY BAZAVIY LINKLARNI KIRITING!
-        const PAYME_BASE_URL = 'https://payme.uz/switch/invoices?m=M12345678&amount='; 
-        const CLICK_BASE_URL = 'https://my.click.uz/services/pay?merchant_id=I001&service_id=S101&amount='; 
-        const UZCARD_HUMO_BASE_URL = 'https://your-universal-pay-system.uz/pay?amount='; 
-
         document.addEventListener('DOMContentLoaded', function() {
-            // 1. Ma'lumotlarni olish
+            // localStoragedan ma'lumotlarni olish va ko'rsatish
             const name = localStorage.getItem('regName') || 'Nomaʼlum';
             const course = localStorage.getItem('regCourse') || 'Tanlanmagan';
-            const formattedPrice = localStorage.getItem('regPrice') || '0 UZS';
-            
-            const rawPrice = localStorage.getItem('regPrice')?.replace(/[^0-9]/g, '') || '0'; 
+            const price = localStorage.getItem('regPrice') || '0 UZS';
 
-            // 2. Narxni to'g'ri formatlarga aylantirish
-            const amountInTiyin = parseInt(rawPrice) * 100; // Payme uchun
-            const amountInUZS = parseInt(rawPrice); // Click/Humo uchun
-
-            // 3. Ma'lumotlarni HTML ga joylash
             document.getElementById('payment-name').textContent = name;
             document.getElementById('payment-course').textContent = course;
-            document.getElementById('payment-price').textContent = formattedPrice;
+            document.getElementById('payment-price').textContent = price;
             
-            // 4. To'lov tugmalarini sozlash
-            document.querySelector('.payme-btn').href = `${PAYME_BASE_URL}${amountInTiyin}`;
-            document.querySelector('.click-btn').href = `${CLICK_BASE_URL}${amountInUZS}`;
-            document.querySelector('.humo-uzcard-btn').href = `${UZCARD_HUMO_BASE_URL}${amountInUZS}`;
+            // NOTE: Bu yerda siz 8600 XXXX XXXX 1234 o'rniga o'zingizning haqiqiy karta raqamingizni kiritishingiz kerak.
         });
     </script>
 </body>
