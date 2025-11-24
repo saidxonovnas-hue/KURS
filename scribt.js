@@ -8,11 +8,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const mainNav = document.getElementById('mainNav'); 
     const registerForm = document.getElementById('register-form'); 
 
-    // --- 1. Hamburger menyu funksiyasi ---
+    // --- 1. Hamburger menyu funksiyasi (MUAMMO HAL QILINDI) ---
+    // Bu kod register.html va index.html da ishlaydi
     if (menuToggle && mainNav) { 
         menuToggle.addEventListener('click', function () { 
             mainNav.classList.toggle('active'); 
         });
+        // Menyudagi linkni bosganda yopish
         mainNav.querySelectorAll('a').forEach(link => { 
             link.addEventListener('click', () => { 
                 mainNav.classList.remove('active'); 
@@ -45,14 +47,10 @@ document.addEventListener('DOMContentLoaded', function () {
             localStorage.setItem('regPhone', phone); 
             localStorage.setItem('regPrice', formattedPrice); 
             
-            // MUHIM TUZATISH: Qisqa kutish (50ms) beramiz, shunda localStorageda ma'lumot saqlanib ulguradi.
+            // MUHIM: 50ms kutish beriladi, shunda ma'lumot saqlanib ulguradi va sahifaga o'tadi
             setTimeout(() => {
-                // To'lov sahifasiga o'tish
                 window.location.href = PAYMENT_PAGE_URL; 
-            }, 50); // 50 millisekund kutish
-
-            // Telegram kanalini ochish (agar kerak bo'lsa)
-            // window.open(TELEGRAM_URL, '_blank'); 
+            }, 50); 
         });
     }
 });
